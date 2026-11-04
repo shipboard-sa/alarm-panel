@@ -4,7 +4,7 @@ Purpose: Decision register for the Alarm Panel V2 PCB — every binding choice a
 Version: v1 (2026-10-30) - created.
 Scope: STANDALONE UTILITY - PCB design project.
 Architecture: Alarm panel register. Prefix AP-D-. Circuit-level decisions that affect the
-  panel live in hylas-cams wiki/Design-Decisions.md.
+  panel live in wiring-io wiki/Design-Decisions.md.
 Invocation: n/a (reference doc)
 -->
 

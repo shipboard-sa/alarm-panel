@@ -48,12 +48,12 @@ Most channels use the same standard normally-open (NO) alarm circuit:
 | AL21| Standard NO | Q41,Q42, D41,D42, R101-R105, LED41/LED42 | Balmar/Wakespeed alarm |
 | AL22| Standard NO | Q43,Q44, D43,D44, R106-R110, LED43/LED44 | Spare. Col 2 Row 3 (CN5) |
 | AL23| Standard NO | Q45,Q46, D45,D46, R111-R115, LED45/LED46 | Spare. Col 2 Row 7 (CN2) |
-| AL24| **Comparator** | Q47,Q48, D47,D48, R116-R120, LED47/LED48 | Overcharging detect (TP4056 circuit). **LEE CONFIRMED Col 3 Pos 5** |
+| AL24| **Comparator** | Q47,Q48, D47,D48, R116-R120, LED47/LED48 | Overcharging detect (TP4056 circuit). **CONFIRMED Col 3 Pos 5** |
 | AL25| Standard NO | Q57,Q58, D17,D18, R26-R30, LED11/LED12 | Spare. Col 4 Row 2 (CN4). **CORRECTED** (was LED49/50) |
 | AL26| Standard NO | Q13,Q14, D19,D20, R31-R35, LED13/LED14 | Spare. Col 4 Row 8 (CN3). **CORRECTED** (was LED53/54) |
 | AL27| Standard NO | Q55,Q56, D21,D22, R136-R140, LED15/LED16 | Spare. Col 1 Row 7 (CN8). **CORRECTED** (was LED55/56) |
 | AL28| **Comparator** | Q49,Q50, D55,D56, R121-R125, LED49/LED50 | Battery temp (TP4056 circuit). **CORRECTED** (was LED57/58) |
-| AL29| Standard NO | Q51,Q52, D51,D52, R126-R130, LED51/LED52 | Spare. **LEE CONFIRMED Col 3 Pos 7** |
+| AL29| Standard NO | Q51,Q52, D51,D52, R126-R130, LED51/LED52 | Spare. **CONFIRMED Col 3 Pos 7** |
 
 ### Component Position Mapping Note
 AL25-29 use remapped Q/R/LED numbering in the schematic (schematic position ≠ AL number):

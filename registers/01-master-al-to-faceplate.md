@@ -9,11 +9,11 @@
 - Faceplate V2 HTML (agreed layout, faceplate_v20.html)
 
 - AL-9 V2 = NO (was NC as-built, reused circuit)
-- Lee: U1/U2/U4 are YLED0805YG green LEDs driven directly by 24V buses (not AL circuits)
+- Note: U1/U2/U4 are YLED0805YG green LEDs driven directly by 24V buses (not AL circuits)
   - U1 = M/E ignition 24V (engine running indicator)
   - U2 = GenSet ignition 24V (genset running indicator)
   - U4 = Panel +24V (panel power indicator)
-- Lee: LED59 is AL7 alarm LED; LED13/14 are AL26 (2026-10-28)
+- Note: LED59 is AL7 alarm LED; LED13/14 are AL26 (2026-10-28)
 - Correction: AL25/AL26 are spare channels, NOT green LED drivers
 
 ## LED Pair Convention
