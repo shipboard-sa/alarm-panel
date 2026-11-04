@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alarm Panel V2.2 — Project Documentation</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #666;
+    --border: #ddd; --accent: #2563eb; --accent-light: #eff6ff;
+    --warn: #dc2626; --ok: #16a34a;
+    --table-stripe: #f9fafb; --code-bg: #f3f4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111; --fg: #e5e5e5; --muted: #999;
+      --border: #333; --accent: #60a5fa; --accent-light: #1e293b;
+      --table-stripe: #1a1a1a; --code-bg: #1e1e1e;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 1.8rem; margin-bottom: 4px; }
+  h2 { font-size: 1.3rem; margin-top: 32px; margin-bottom: 12px; border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
+  h3 { font-size: 1.1rem; margin-top: 20px; margin-bottom: 8px; color: var(--accent); }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+  .status-badge { display: inline-block; background: var(--ok); color: white; padding: 2px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+  th { background: var(--accent-light); text-align: left; padding: 8px 10px; border: 1px solid var(--border); font-weight: 600; }
+  td { padding: 6px 10px; border: 1px solid var(--border); }
+  tr:nth-child(even) td { background: var(--table-stripe); }
+  code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; font-size: 0.88rem; }
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  .spec-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .spec-card h4 { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .spec-card .value { font-size: 1.4rem; font-weight: 700; }
+  .spec-card .detail { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+  .warn { color: var(--warn); font-weight: 600; }
+  .ok { color: var(--ok); font-weight: 600; }
+  p { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin: 4px 0; }
+  .section-note { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 10px 14px; margin: 12px 0; border-radius: 0 4px 4px 0; font-size: 0.9rem; }
+  .toc { background: var(--table-stripe); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 20px 0; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ol { margin: 8px 0 0 20px; }
+  .toc li { margin: 3px 0; }
+  @media (max-width: 600px) { .spec-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Alarm Panel V2.2</h1>
+<p class="subtitle">YOUR VESSEL NAME — Master Alarm Panel PCB &amp; Assembly</p>
+<p><span class="status-badge">JLCPCB ORDER PLACED</span> &nbsp; 2026-10-29</p>
+
+<nav class="toc">
+<strong>Contents</strong>
+<ol>
+  <li><a href="#overview">Project Overview</a></li>
+  <li><a href="#specs">Board Specifications</a></li>
+  <li><a href="#channels">Alarm Channels (29)</a></li>
+  <li><a href="#bom">Bill of Materials</a></li>
+  <li><a href="#connectors">Connector Assignments</a></li>
+  <li><a href="#special">Special Circuits</a></li>
+  <li><a href="#fab">Fabrication &amp; Assembly</a></li>
+  <li><a href="#faceplate">Faceplate</a></li>
+  <li><a href="#integration">Integration &amp; Test</a></li>
+  <li><a href="#lessons">Lessons Learned</a></li>
+  <li><a href="#files">File Reference</a></li>
+</ol>
+</nav>
+
+<h2 id="overview">1. Project Overview</h2>
+<p>Custom 29-point alarm panel replacing the original Aqualarm unit on your vessel. The panel monitors bilge pumps, high water, fire detection, engine alarms, electrical system faults, refrigeration, navigation, and security sensors. Each alarm channel drives a red indicator LED and has an illuminated backlight label. Three green LEDs indicate engine running, genset running, and panel power. MUTE and TEST are lighted panel-mount pushbuttons.</p>
+
+<p>The design was done in EasyEDA Standard. PCB layout uses programmatic component placement (Python scripts operating on the EasyEDA JSON format) with EasyEDA's auto-router for trace routing.</p>
+
+<div class="section-note">
+  <strong>Repository:</strong> <code>shipboard-sa/alarm-panel</code> (private, GitHub)<br>
+  <strong>Schematic:</strong> EasyEDA Standard, V2.2 (CN9 added 2026-10-29)<br>
+  <strong>PCB:</strong> <code>PCB_Alarm-v2.2_LAYERS_FIXED</code> (final routed version)
+</div>
+
+<h2 id="specs">2. Board Specifications</h2>
+
+<div class="spec-grid">
+  <div class="spec-card">
+    <h4>PCB Dimensions</h4>
+    <div class="value">279 × 114 mm</div>
+    <div class="detail">2-layer FR-4, 1 oz copper</div>
+  </div>
+  <div class="spec-card">
+    <h4>Faceplate</h4>
+    <div class="value">305 × 140 mm</div>
+    <div class="detail">12.7mm inset from PCB edges</div>
+  </div>
+  <div class="spec-card">
+    <h4>Connections</h4>
+    <div class="value">950 / 950</div>
+    <div class="detail">0 failed, 226 vias, DRC clean</div>
+  </div>
+  <div class="spec-card">
+    <h4>Components</h4>
+    <div class="value">382</div>
+    <div class="detail">371 SMD (JLCPCB) + 11 TH (hand-solder)</div>
+  </div>
+</div>
+
+<h3>Layer Assignment</h3>
+<table>
+  <tr><th>Layer</th><th>Components</th></tr>
+  <tr><td><strong>Front (Top)</strong></td><td>68 LEDs (29 RED indicator + 39 ORANGE backlight), 3 GREEN indicators (U1/U2/U4), BUZZER1</td></tr>
+  <tr><td><strong>Back (Bottom)</strong></td><td>29×9 AL circuit parts (Q, D, R), 8 connectors (CN1-CN8), CN9 (mute/buzzer interface), H1-H5, U3 (78L05), U5 (LM393), C1-C3</td></tr>
+</table>
+
+<h2 id="channels">3. Alarm Channels</h2>
+
+<h3>Column 1 — Bilge / Water</h3>
+<table>
+  <tr><th>Row</th><th>Label</th><th>AL</th><th>Function</th><th>Type</th><th>Indicator</th><th>Backlight</th></tr>
+  <tr><td>1</td><td>Salon High Water</td><td>AL4</td><td>high_water_salon</td><td>NO</td><td>LED7</td><td>LED8</td></tr>
+  <tr><td>2</td><td>Salon Bilge</td><td>AL3</td><td>salon_bilge_pump</td><td>NO</td><td>LED5</td><td>LED6</td></tr>
+  <tr><td>3</td><td>Engine Bilge</td><td>AL1</td><td>engine_bilge_pump</td><td>NO</td><td>LED1</td><td>LED2</td></tr>
+  <tr><td>4</td><td>Bow High Water</td><td>AL2</td><td>high_water_bow</td><td>NO</td><td>LED3</td><td>LED4</td></tr>
+  <tr><td>5</td><td>Bow Bilge Pump</td><td>AL9</td><td>bow_bilge_pump</td><td>NO <span class="warn">(was NC)</span></td><td>LED18</td><td>LED17</td></tr>
+  <tr><td>6</td><td>FW Pump</td><td>AL5</td><td>fresh_water_pump</td><td>NO</td><td>LED9</td><td>LED10</td></tr>
+  <tr><td>7</td><td>Spare</td><td>AL27</td><td>spare</td><td>NO</td><td>LED15</td><td>LED16</td></tr>
+</table>
+
+<h3>Column 2 — Fire + Engine</h3>
+<table>
+  <tr><th>Row</th><th>Label</th><th>AL</th><th>Function</th><th>Type</th><th>Indicator</th><th>Backlight</th></tr>
+  <tr><td>1</td><td>E/R Heat</td><td>AL19</td><td>er_heat</td><td>NO</td><td>LED37</td><td>LED38</td></tr>
+  <tr><td>2</td><td>E/R Smoke</td><td>AL20</td><td>er_smoke</td><td>NO</td><td>LED40</td><td>LED39</td></tr>
+  <tr><td>3</td><td>Spare</td><td>AL22</td><td>spare</td><td>NO</td><td>LED43</td><td>LED44</td></tr>
+  <tr><td>4</td><td>Eng Raw Water</td><td>AL6</td><td>yanmar_raw_water_flow</td><td>NO</td><td>LED58 + U1 🟢</td><td>LED57</td></tr>
+  <tr><td>5</td><td>GenSet Raw Water</td><td>AL7</td><td>genset_raw_water_flow</td><td>NO</td><td>LED59 + U2 🟢</td><td>LED60</td></tr>
+  <tr><td>6</td><td>Water in Fuel</td><td>AL18</td><td>water_in_fuel</td><td>NO</td><td>LED35</td><td>LED36</td></tr>
+  <tr><td>7</td><td>Spare</td><td>AL23</td><td>spare</td><td>NO</td><td>LED45</td><td>LED46</td></tr>
+</table>
+<p style="font-size:0.85rem;color:var(--muted)">U1 (M/E running) and U2 (GenSet running) are green LEDs driven directly by ignition 24V — not AL circuits.</p>
+
+<h3>Column 3 — Electrical</h3>
+<table>
+  <tr><th>Row</th><th>Label</th><th>AL</th><th>Function</th><th>Type</th><th>Indicator</th><th>Backlight</th></tr>
+  <tr><td>1</td><td>Master Electrical</td><td>AL16</td><td>victron_master_alarm</td><td>NO</td><td>LED31</td><td>LED32</td></tr>
+  <tr><td>2</td><td>Inverter / Charger</td><td>AL14</td><td>multiplus_alarm</td><td>NO</td><td>LED28</td><td>LED27</td></tr>
+  <tr><td>3</td><td>House Load Cutoff</td><td>AL15</td><td>batteryprotect_alarm</td><td>NO</td><td>LED29</td><td>LED30</td></tr>
+  <tr><td>4</td><td>Balmar</td><td>AL21</td><td>wakespeed_alarm</td><td>NO</td><td>LED41</td><td>LED42</td></tr>
+  <tr><td>5</td><td>Overcharging</td><td>AL24</td><td>overcharging_detect</td><td>Comparator</td><td>LED48</td><td>LED47</td></tr>
+  <tr><td>6</td><td>Battery Temp</td><td>AL28</td><td>battery_temp</td><td>Comparator</td><td>LED49</td><td>LED50</td></tr>
+  <tr><td>7</td><td>Spare</td><td>AL29</td><td>spare</td><td>NO</td><td>LED52</td><td>LED51</td></tr>
+  <tr><td>8</td><td><em>(OPEN)</em></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+
+<h3>Column 4 — Refrigeration + Nav/Security</h3>
+<table>
+  <tr><th>Row</th><th>Label</th><th>AL</th><th>Function</th><th>Type</th><th>Indicator</th><th>Backlight</th></tr>
+  <tr><td>1</td><td>Fridge / Freezer</td><td>AL17</td><td>cold_storage_temp_alarm</td><td>NO</td><td>LED34</td><td>LED33</td></tr>
+  <tr><td>2</td><td>Spare</td><td>AL25</td><td>spare</td><td>NO</td><td>LED11</td><td>LED12</td></tr>
+  <tr><td>3</td><td>AIS</td><td>AL11</td><td>ais_alarm</td><td>NO</td><td>LED21</td><td>LED22</td></tr>
+  <tr><td>4</td><td>Anchor Drag</td><td>AL12</td><td>anchor_drag</td><td>NO</td><td>LED23</td><td>LED24</td></tr>
+  <tr><td>5</td><td>Autopilot</td><td>AL10</td><td>autopilot_ccu_error</td><td>NO</td><td>LED20</td><td>LED19</td></tr>
+  <tr><td>6</td><td>Automation</td><td>AL13</td><td>automation_heartbeat</td><td>NO</td><td>LED25</td><td>LED26</td></tr>
+  <tr><td>7</td><td>Dinghy Theft</td><td>AL8</td><td>dinghy_theft_loop</td><td class="warn">NC</td><td>LED55</td><td>LED56</td></tr>
+  <tr><td>8</td><td>Spare</td><td>AL26</td><td>spare</td><td>NO</td><td>LED13</td><td>LED14</td></tr>
+</table>
+
+<h3>Zone Backlight LEDs (LED61–70)</h3>
+<table>
+  <tr><th>LED</th><th>Illuminates</th></tr>
+  <tr><td>LED61</td><td>BILGE / WATER header</td></tr>
+  <tr><td>LED62</td><td>FIRE header</td></tr>
+  <tr><td>LED63</td><td>ENGINE sub-header</td></tr>
+  <tr><td>LED64</td><td>ELECTRICAL header</td></tr>
+  <tr><td>LED65</td><td>REFRIGERATION header</td></tr>
+  <tr><td>LED66</td><td>NAV / SECURITY sub-header</td></tr>
+  <tr><td>LED67</td><td>Title (left) — YOUR VESSEL NAME</td></tr>
+  <tr><td>LED68</td><td>Title (right) — YOUR VESSEL NAME</td></tr>
+  <tr><td>LED69</td><td>MASTER ALARM PANEL subtitle</td></tr>
+  <tr><td>LED70</td><td>PWR label</td></tr>
+</table>
+
+<h2 id="bom">4. Bill of Materials</h2>
+
+<table>
+  <tr><th>Component</th><th>Qty</th><th>Package</th><th>LCSC</th><th>Manufacturer Part</th></tr>
+  <tr><td>Resistor 2.2K 1%</td><td>102</td><td>1206</td><td>C325909</td><td>Tyohm RMC12062.2K1%N</td></tr>
+  <tr><td>Resistor 10K</td><td>64</td><td>0805</td><td>C3013856</td><td>Vishay TNPW080510K0FEEA</td></tr>
+  <tr><td>Diode 1N4148WX</td><td>59</td><td>SOD-323</td><td>C19089391</td><td>Yongyutai 1N4148WX</td></tr>
+  <tr><td>LED ORANGE backlight</td><td>41</td><td>0805</td><td>C5123498</td><td>BrtLed BL-HJC35A-AV-TRB</td></tr>
+  <tr><td>LED RED indicator</td><td>29</td><td>0805</td><td>C9900019100</td><td>SMD Red LED 0805</td></tr>
+  <tr><td>Transistor PNP (Q_even)</td><td>29</td><td>SOT-23</td><td>C52792</td><td>ST P0102BL5AA4</td></tr>
+  <tr><td>Transistor NPN (Q_odd)</td><td>29</td><td>SOT-23</td><td>C53373686</td><td>CCX MMBT2222A</td></tr>
+  <tr><td>Connector 8-pin 5.08mm</td><td>8</td><td>KF142V-5.08-8P</td><td>C475140</td><td>KEFA KF142V-5.08-8P</td></tr>
+  <tr><td>LED GREEN indicator</td><td>3</td><td>0805</td><td>C19171393</td><td>Yongyutai YLED0805YG</td></tr>
+  <tr><td>Header 2-pin SMD</td><td>3</td><td>1.27mm</td><td>C55213900</td><td>Shou Han PZ1.27-1x2PLT</td></tr>
+  <tr><td>Capacitor 100nF</td><td>3</td><td>0805</td><td>C49678</td><td>Yageo CC0805KRX7R9BB104</td></tr>
+  <tr><td>TVS SMBJ26A</td><td>3</td><td>SMB</td><td>C135062</td><td>Diodes Inc SMBJ26A-13-F</td></tr>
+  <tr><td>Schottky SS54</td><td>3</td><td>SMA</td><td>C22452</td><td>MDD SS54</td></tr>
+  <tr><td>Header 2-pin TH (MUTE/TEST)</td><td>2</td><td>2.54mm</td><td>C492401</td><td>XFCN PZ254V-11-02P</td></tr>
+  <tr><td>Buzzer</td><td>1</td><td>TH 12mm</td><td>C96095</td><td>HMB1206-05</td></tr>
+  <tr><td>Diode 1N5819W</td><td>1</td><td>SOD-123F</td><td>C169540</td><td>1N5819W</td></tr>
+  <tr><td>Transistor MMBT8050D</td><td>1</td><td>SOT-23</td><td>C411762</td><td>PJSEMI MMBT8050D</td></tr>
+  <tr><td>Voltage reg 78L05</td><td>1</td><td>SOT-89</td><td>C28642115</td><td>78L05-EV</td></tr>
+  <tr><td>Comparator LM393</td><td>1</td><td>SOIC-8</td><td>C7955</td><td>ON Semi LM393DR2G</td></tr>
+</table>
+
+<h3>Component Totals by Prefix</h3>
+<table>
+  <tr><th>Prefix</th><th>Count</th><th>Notes</th></tr>
+  <tr><td>R</td><td>166</td><td>102× 1206 (2.2K) + 64× 0805 (10K)</td></tr>
+  <tr><td>LED</td><td>68</td><td>29 RED + 39 ORANGE (after AL30 deletion)</td></tr>
+  <tr><td>D</td><td>66</td><td>59× 1N4148WX + 3× SMBJ26A + 3× SS54 + 1× 1N5819W</td></tr>
+  <tr><td>Q</td><td>59</td><td>29× PNP + 29× NPN + 1× MMBT8050D</td></tr>
+  <tr><td>CN</td><td>9</td><td>CN1-CN8: KF142V-5.08-8P; CN9: KF142V-5.08-3P (mute/buzzer)</td></tr>
+  <tr><td>H</td><td>5</td><td>H1-H3 SMD, H4 TH (TEST), H5 TH (MUTE)</td></tr>
+  <tr><td>U</td><td>5</td><td>U1/U2/U4 = green LEDs, U3 = 78L05, U5 = LM393</td></tr>
+  <tr><td>C</td><td>3</td><td>100nF decoupling</td></tr>
+  <tr><td>BUZZER</td><td>1</td><td>Through-hole piezo</td></tr>
+  <tr><td colspan="2"><strong>Total: 382</strong></td><td>371 SMD (JLCPCB assembly) + 11 TH (hand-solder)</td></tr>
+</table>
+
+<h2 id="connectors">5. Connector Assignments</h2>
+<p>CN1-CN8: KF142V-5.08-8P (8 pins, 5.08mm pitch screw terminal). CN1-CN7 vertical, CN8 horizontal. CN9: KF142V-5.08-3P (3 pins) for mute/buzzer interface.</p>
+
+<table>
+  <tr><th>CN</th><th>Position</th><th>Pin 1</th><th>Pin 2</th><th>Pin 3</th><th>Pin 4</th><th>Pins 5-8</th></tr>
+  <tr><td>CN1</td><td>Between Col 1-2</td><td>AL4</td><td>AL3</td><td>AL1</td><td>AL2</td><td>GND/+24V</td></tr>
+  <tr><td>CN2</td><td>Between Col 2-3</td><td>AL7</td><td>AL18</td><td>AL23</td><td>ME Pwr</td><td>GS Pwr / GND</td></tr>
+  <tr><td>CN3</td><td>Right side</td><td>AL10</td><td>AL13</td><td>AL8</td><td>AL26</td><td>GND/power</td></tr>
+  <tr><td>CN4</td><td>Right side</td><td>AL17</td><td>AL25</td><td>AL11</td><td>AL12</td><td>GND/power</td></tr>
+  <tr><td>CN5</td><td>Between Col 2-3</td><td>AL19</td><td>AL20</td><td>AL22</td><td>AL6</td><td>GND/power</td></tr>
+  <tr><td>CN6</td><td>Between Col 3-4</td><td>AL24</td><td>AL28</td><td>AL29</td><td>—</td><td>GND/power</td></tr>
+  <tr><td>CN7</td><td>Between Col 3-4</td><td>AL16</td><td>AL14</td><td>AL15</td><td>AL21</td><td>GND/power</td></tr>
+  <tr><td>CN8</td><td>Lower left (horiz)</td><td>AL27</td><td>AL5</td><td>AL9</td><td>+24V</td><td>GND</td></tr>
+</table>
+
+<h3>CN9 — External Mute/Buzzer Interface</h3>
+<table>
+  <tr><th>Pin</th><th>Net</th><th>Function</th></tr>
+  <tr><td>1</td><td>MuteBus</td><td>Mute Out — Pi reads to detect panel ack</td></tr>
+  <tr><td>2</td><td>MuteBus</td><td>Mute In — Pi writes for remote mute</td></tr>
+  <tr><td>3</td><td>BuzzerBus</td><td>Buzzer Out — drives external buzzer</td></tr>
+</table>
+<p style="font-size:0.85rem;color:var(--muted)">CN9 is a 3-pin KF142V-5.08-3P near the buzzer/mute area. Pins 1+2 both on MuteBus (separate read/write terminals for the Pi).</p>
+
+<h3>Panel-Mount Button Headers</h3>
+<table>
+  <tr><th>Header</th><th>Button</th><th>Pin 1</th><th>Pin 2</th><th>Package</th></tr>
+  <tr><td>H4</td><td>TEST</td><td>TestLEDs</td><td>GND</td><td>PZ254V-11-02P (2.54mm TH, C492401)</td></tr>
+  <tr><td>H5</td><td>MUTE</td><td>MuteBus</td><td>GND</td><td>PZ254V-11-02P (2.54mm TH, C492401)</td></tr>
+</table>
+
+<h2 id="special">6. Special Circuits</h2>
+
+<h3>Standard NO Circuit (23 channels)</h3>
+<p>Each standard channel has 9 components: Q_odd (NPN input), Q_even (PNP LED driver), D_direct (input protection), D_other (flyback), and 5 resistors (R1 LED current-limit, R2 base bias, R3 pull-down, R4 collector/LED path, R5 emitter).</p>
+
+<h3>NC Circuit — AL8 (Dinghy Theft)</h3>
+<p>Alarm triggers when the loop <strong>opens</strong> (wire cut, connector pulled). Circuit inverts standard NO logic.</p>
+
+<h3>Comparator Circuits — AL24, AL28</h3>
+<p>AL24 (overcharging) and AL28 (battery temp) use a comparator-based threshold circuit with U5 (LM393) and U3 (78L05 regulator). Monitors analog voltage level against a reference.</p>
+
+<h3>Running/Power Indicators (not AL circuits)</h3>
+<table>
+  <tr><th>Component</th><th>Function</th><th>Driven By</th><th>Position</th></tr>
+  <tr><td>U1 (YLED0805YG)</td><td>M/E Running</td><td>M/E ignition +24V</td><td>Col 2 Row 4</td></tr>
+  <tr><td>U2 (YLED0805YG)</td><td>GenSet Running</td><td>GenSet ignition +24V</td><td>Col 2 Row 5</td></tr>
+  <tr><td>U4 (YLED0805YG)</td><td>Panel Power</td><td>Panel +24V</td><td>Top center</td></tr>
+</table>
+
+<h2 id="fab">7. Fabrication &amp; Assembly</h2>
+
+<h3>JLCPCB Order (2026-10-28)</h3>
+<table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>Layers</td><td>2</td></tr>
+  <tr><td>Dimensions</td><td>279mm × 114mm</td></tr>
+  <tr><td>Substrate</td><td>FR-4</td></tr>
+  <tr><td>Copper weight</td><td>1 oz</td></tr>
+  <tr><td>PCB quantity</td><td>5</td></tr>
+  <tr><td>PCB color</td><td>Green</td></tr>
+  <tr><td>Bare PCB price</td><td>$19.06</td></tr>
+  <tr><td>Assembly</td><td>SMT (371 components)</td></tr>
+</table>
+
+<h3>Export Files</h3>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>Gerber_Alarm-v2.1_..._2026-10-28.zip</code></td><td>PCB fabrication layers</td></tr>
+  <tr><td><code>BOM_Alarm-v2.1_2026-10-28 (1).csv</code></td><td>Component list with LCSC part numbers</td></tr>
+  <tr><td><code>PickAndPlace_..._2026-10-28.csv</code></td><td>Centroid + rotation for SMT placement</td></tr>
+</table>
+
+<h3>Hand-Solder After Delivery (11 TH components)</h3>
+<ul>
+  <li>BUZZER1 — through-hole piezo, sound exit through faceplate hole</li>
+  <li>CN1-CN8 — KF142V-5.08-8P screw terminals (8 connectors × 8 pins)</li>
+  <li>CN9 — KF142V-5.08-3P screw terminal (mute/buzzer interface, 3 pins)</li>
+  <li>H4 (TEST), H5 (MUTE) — 2-pin TH headers for pushbuttons</li>
+</ul>
+
+<h2 id="faceplate">8. Faceplate</h2>
+<p>305mm × 140mm panel overlay, mounted over the PCB with a 12.7mm inset on all sides. LEDs shine through cutouts or translucent label areas. Fabrication method TBD (laser cut, CNC, or printed overlay).</p>
+<ul>
+  <li>4 columns × 7-8 rows of alarm labels</li>
+  <li>Section headers: BILGE/WATER, FIRE, ENGINE, ELECTRICAL, REFRIGERATION, NAV/SECURITY</li>
+  <li>Title: YOUR VESSEL NAME — MASTER ALARM PANEL</li>
+  <li>MUTE and TEST: lighted panel-mount pushbuttons (not PCB-mounted)</li>
+  <li>PWR indicator: U4 green LED with label</li>
+</ul>
+
+<h2 id="integration">9. Integration &amp; Test</h2>
+<ol>
+  <li>Inspect SMT assembly (solder joints, component orientation)</li>
+  <li>Hand-solder TH components (buzzer, connectors, button headers)</li>
+  <li>Power-on test: apply +24V, verify U4 green LED (panel power), all orange backlights illuminate</li>
+  <li>Channel test: short each AL input to ground, verify correct RED indicator lights</li>
+  <li>MUTE test: press MUTE, verify buzzer silences, indicator remains lit</li>
+  <li>TEST test: press TEST, verify all RED indicators light simultaneously</li>
+  <li>NC channel test (AL8): verify LED lit with loop closed, LED off with loop open (inverted logic)</li>
+  <li>Comparator test (AL24/AL28): verify threshold trip points</li>
+  <li>Engine running test: apply 24V to M/E ignition input, verify U1 green LED</li>
+  <li>Mount faceplate, install in panel location, wire connectors to ship's alarm bus</li>
+</ol>
+
+<h2 id="lessons">10. Lessons Learned</h2>
+
+<h3>EasyEDA JSON Format</h3>
+<ul>
+  <li>Components are <code>LIB~</code> entries in the <code>shape</code> array, with <code>#@$</code> delimited sub-elements</li>
+  <li>Coordinate system: 1 EE-unit = 0.254mm = 10mil; multiply mm by 3.937 and add board origin offset</li>
+  <li>Designator is at position 10 inside <code>TEXT~P~</code> sub-elements, not in the header fields</li>
+  <li>All sub-element coordinates (PAD, TRACK, SOLIDREGION, CIRCLE, TEXT, SVGNODE) are <strong>absolute</strong> — moving a component requires shifting every sub-element</li>
+</ul>
+
+<h3>PCB Layout</h3>
+<ul>
+  <li><strong>Connectors should follow signal flow:</strong> LED → R → connector. Place each column's connectors one column LEFT so resistors sit between LEDs and connectors. Reduces vias.</li>
+  <li><strong>Never script-move TH connectors:</strong> Through-hole pad formats differ from SMD. The <code>full_move</code> function left ghost pads at original positions. Let EasyEDA handle TH placement natively.</li>
+  <li><strong>Resistor numbering:</strong> Verify R designator formulas against the schematic netlist before running any automated placement. Off-by-one errors in the mapping put components near wrong LEDs.</li>
+  <li><strong>Layer assignment matters:</strong> 40 components were initially on the wrong layer (front instead of back). Correcting layers before routing reduced vias from 234 to 228.</li>
+</ul>
+
+<h2 id="files">11. File Reference</h2>
+<table>
+  <tr><th>Location</th><th>Contents</th></tr>
+  <tr><td><code>registers/01-master-al-to-faceplate.md</code></td><td>AL → column/row/function/LED mapping (v0.4)</td></tr>
+  <tr><td><code>registers/02-al-circuit-mapping.md</code></td><td>Circuit topology per AL channel (v0.2)</td></tr>
+  <tr><td><code>registers/03-v1-as-built-record.md</code></td><td>Original Aqualarm V1 configuration</td></tr>
+  <tr><td><code>registers/04-led-placement-grid.md</code></td><td>LED PCB positions (superseded by overlay V4)</td></tr>
+  <tr><td><code>registers/05-bom-preliminary.md</code></td><td>BOM with LCSC part numbers (v0.2)</td></tr>
+  <tr><td><code>registers/06-connector-assignments.md</code></td><td>Connector pin → AL signal mapping</td></tr>
+  <tr><td><code>scripts/</code></td><td>Python placement + template replication scripts</td></tr>
+  <tr><td><code>docs/alarm-panel-v2-project.html</code></td><td>This document</td></tr>
+</table>
+
+<hr style="margin-top:32px">
+<p style="font-size:0.8rem;color:var(--muted)">YOUR VESSEL NAME — Alarm Panel V2.1 Project Documentation — 2026-10-28</p>
+
+</body>
+</html>

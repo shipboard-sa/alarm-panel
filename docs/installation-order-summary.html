@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alarm Panel V2.2 — Installation Order Summary</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1a1a;color:#e0e0e0;font-family:'Segoe UI',system-ui,sans-serif;padding:24px;max-width:900px;margin:0 auto}
+h1{font-size:18px;color:#c8a24e;margin-bottom:4px}
+h2{font-size:14px;color:#aaa;margin:20px 0 8px;border-bottom:1px solid #333;padding-bottom:4px}
+.sub{font-size:12px;color:#888;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;font-size:12px;margin:8px 0 16px}
+th,td{border:1px solid #333;padding:5px 8px;text-align:left}
+th{background:#252525;color:#aaa;font-weight:600}
+.ordered{color:#60ff60}
+.needed{color:#ff9040}
+.assumed{color:#ff6060}
+.note{font-size:11px;color:#888;font-style:italic}
+.section{background:#222;border:1px solid #333;border-radius:6px;padding:12px 16px;margin:12px 0}
+.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:6px}
+.tag-ordered{background:#1a4a1a;color:#60ff60}
+.tag-needed{background:#4a3a1a;color:#ff9040}
+.tag-assumed{background:#4a1a1a;color:#ff6060}
+</style>
+</head>
+<body>
+
+<h1>ALARM PANEL V2.2 — INSTALLATION ORDER SUMMARY</h1>
+<div class="sub">2026-10-29 — Everything needed to build, mount, and wire the panel</div>
+
+<h2>1. PCBs <span class="tag tag-ordered">ORDERED</span></h2>
+<table>
+<tr><th>Item</th><th>Spec</th><th>Source</th><th>Status</th></tr>
+<tr><td>V2.2 Main PCB</td><td>279×114mm, 2-layer FR-4, SMT assembled (382 components)</td><td>JLCPCB</td><td class="ordered">ORDERED 2026-10-29</td></tr>
+<tr><td>Faceplate PCB</td><td>305×140mm, black solder mask, white silkscreen, 1.6mm FR-4</td><td>JLCPCB</td><td class="ordered">ORDERED 2026-10-29</td></tr>
+</table>
+
+<h2>2. Through-Hole Components (hand-solder on arrival) <span class="tag tag-needed">ORDER FROM LCSC</span></h2>
+<p class="note">JLCPCB SMT assembly places SMD only. These TH parts ship from the same LCSC warehouse — add to cart on LCSC.com.</p>
+<table>
+<tr><th>Qty</th><th>Component</th><th>Part</th><th>LCSC #</th><th>Notes</th></tr>
+<tr><td>8</td><td>Connector 8-pin 5.08mm</td><td>KEFA KF142V-5.08-8P</td><td>C475140</td><td>CN1–CN8, vertical mount</td></tr>
+<tr><td>1</td><td>Connector 3-pin 5.08mm</td><td>KEFA KF142V-5.08-3P</td><td>C474887</td><td>CN9 (mute/buzzer interface)</td></tr>
+<tr><td>2</td><td>Header 2-pin 2.54mm TH</td><td>XFCN PZ254V-11-02P</td><td>C492401</td><td>H4 (TEST), H5 (MUTE)</td></tr>
+<tr><td>1</td><td>Piezo buzzer 12mm</td><td>HMB1206-05</td><td>C96095</td><td>Through-hole, soldered to PCB</td></tr>
+</table>
+
+<h2>3. Panel-Mount Pushbuttons <span class="tag tag-assumed">NEED PART NUMBER</span></h2>
+<p class="note">Register 01 says "lighted panel-mount pushbuttons with built-in LEDs" — no specific part number on record. Need to select and order.</p>
+<table>
+<tr><th>Qty</th><th>Function</th><th>Requirements</th><th>Part #</th></tr>
+<tr><td>1</td><td>MUTE button</td><td>12mm panel-mount, lighted, momentary, NO</td><td class="assumed">TBD</td></tr>
+<tr><td>1</td><td>TEST button</td><td>12mm panel-mount, lighted, momentary, NO</td><td class="assumed">TBD</td></tr>
+</table>
+<div class="section">
+<strong>Button spec constraints:</strong>
+<ul style="margin:6px 0 0 18px;font-size:12px">
+<li>12mm mounting hole in faceplate (already drilled)</li>
+<li>Wired to H4/H5 2-pin TH headers on PCB (2 wires each)</li>
+<li>Lighted = built-in LED (since no PCB backlight behind them)</li>
+<li>Momentary normally-open</li>
+<li>Common options: 12mm metal anti-vandal (IP65), or plastic illuminated pushbuttons</li>
+</ul>
+</div>
+
+<h2>4. Label Strips <span class="tag tag-needed">ORDER FILM</span></h2>
+<table>
+<tr><th>Item</th><th>Source</th><th>Notes</th></tr>
+<tr><td>RTL49 Lite Film (10 sheets, 8.5×11")</td><td>Amazon (~$10–15)</td><td>Translucent backlit film, laser-printable. Print on Patti's laser printer.</td></tr>
+</table>
+<p class="note">Black print with translucent text (reversed out). Cut strips to fit faceplate cutouts (45×8mm channels, 50×9mm zone headers, 14×8mm PWR, 124.8×12mm title bar). Final cutout dims may adjust after test print.</p>
+
+<h2>5. Mounting Hardware <span class="tag tag-needed">NEED TO SOURCE</span></h2>
+<table>
+<tr><th>Qty</th><th>Item</th><th>Notes</th></tr>
+<tr><td>6</td><td>M3 × 10mm standoffs (or appropriate length)</td><td>Space faceplate from main PCB — length depends on component clearance</td></tr>
+<tr><td>12</td><td>M3 screws</td><td>6 front (faceplate) + 6 back (PCB mount)</td></tr>
+<tr><td>—</td><td>Wire (22 AWG stranded)</td><td>Short runs: pushbuttons to H4/H5 headers (~150mm each, 2 wires per button)</td></tr>
+</table>
+<p class="note">Standoff length TBD — measure after PCB arrives. Needs to clear the tallest back-side TH component (KF142V connectors are ~10mm above PCB).</p>
+
+<h2>6. Installation Steps (after all parts arrive)</h2>
+<div class="section" style="font-size:12px">
+<ol style="margin-left:18px;line-height:1.8">
+<li>Hand-solder TH components to main PCB: buzzer, CN1–CN9 (9×), H4/H5 headers (2×)</li>
+<li>Test print label strips on RTL49 film — verify opacity, font size, alignment</li>
+<li>Cut label strips to cutout dimensions</li>
+<li>Mount pushbuttons through faceplate holes (12mm)</li>
+<li>Insert label strips into faceplate cutouts (adhesive or friction fit)</li>
+<li>Assemble faceplate to main PCB with M3 standoffs</li>
+<li>Wire pushbuttons to H4/H5 headers</li>
+<li>Wire alarm channels to CN1–CN8 per register 06</li>
+<li>Wire mute/buzzer interface to CN9</li>
+<li>Apply +24V power, verify all 29 channels + mute/buzzer</li>
+</ol>
+</div>
+
+<h2>Order Action Items</h2>
+<table>
+<tr><th>#</th><th>Action</th><th>Status</th></tr>
+<tr><td>1</td><td>V2.2 Main PCB + SMT assembly (JLCPCB)</td><td class="ordered">DONE</td></tr>
+<tr><td>2</td><td>Faceplate PCB (JLCPCB)</td><td class="ordered">DONE</td></tr>
+<tr><td>3</td><td>TH components from LCSC (connectors, buzzer, headers)</td><td class="needed">ORDER NOW</td></tr>
+<tr><td>4</td><td>Select + order MUTE/TEST lighted pushbuttons</td><td class="assumed">NEED PART #</td></tr>
+<tr><td>5</td><td>RTL49 Lite Film (Amazon)</td><td class="needed">ORDER NOW</td></tr>
+<tr><td>6</td><td>M3 standoffs + screws + wire</td><td class="needed">ORDER or from spares</td></tr>
+</table>
+
+</body>
+</html>

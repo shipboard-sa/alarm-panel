@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faceplate Fabrication — Options &amp; Recommendation</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #666;
+    --border: #ddd; --accent: #2563eb; --accent-light: #eff6ff;
+    --warn: #dc2626; --ok: #16a34a;
+    --table-stripe: #f9fafb; --code-bg: #f3f4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111; --fg: #e5e5e5; --muted: #999;
+      --border: #333; --accent: #60a5fa; --accent-light: #1e293b;
+      --table-stripe: #1a1a1a; --code-bg: #1e1e1e;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 1.8rem; margin-bottom: 4px; }
+  h2 { font-size: 1.3rem; margin-top: 32px; margin-bottom: 12px; border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
+  h3 { font-size: 1.1rem; margin-top: 20px; margin-bottom: 8px; color: var(--accent); }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; color: white; }
+  .badge-rec { background: var(--ok); }
+  .badge-alt { background: var(--accent); }
+  .badge-skip { background: var(--muted); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+  th { background: var(--accent-light); text-align: left; padding: 8px 10px; border: 1px solid var(--border); font-weight: 600; }
+  td { padding: 6px 10px; border: 1px solid var(--border); }
+  tr:nth-child(even) td { background: var(--table-stripe); }
+  .pro { color: var(--ok); font-weight: 600; }
+  .con { color: var(--warn); font-weight: 600; }
+  code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; font-size: 0.88em; }
+  ul { margin: 8px 0 8px 24px; }
+  li { margin-bottom: 4px; }
+  .callout { border-left: 4px solid var(--accent); background: var(--accent-light); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .callout-warn { border-left-color: var(--warn); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<h1>Alarm Panel V2.1 — Faceplate Fabrication</h1>
+<p class="subtitle">Research &amp; recommendation · 2026-10-28</p>
+
+<h2>1. Requirements</h2>
+<table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>Overall size</td><td>305 mm × 140 mm (12″ × 5.5″)</td></tr>
+  <tr><td>PCB behind it</td><td>279 mm × 114 mm, inset 12.7 mm all sides</td></tr>
+  <tr><td>LED windows</td><td>68 red/orange 0805 SMD + 3 green 0805 (U1/U2/U4)</td></tr>
+  <tr><td>Buzzer</td><td>Sound hole(s) over piezo buzzer</td></tr>
+  <tr><td>Buttons</td><td>2 panel-mount pushbuttons (MUTE / TEST) — holes in faceplate</td></tr>
+  <tr><td>Labels</td><td>29 alarm channel names, 4 column headers, title text, PWR label</td></tr>
+  <tr><td>Mounting</td><td>Overlay on PCB; screws or standoffs at edges</td></tr>
+  <tr><td>Quantity</td><td>1–2 (prototype)</td></tr>
+</table>
+
+<h2>2. Options Compared</h2>
+
+<table>
+  <tr>
+    <th style="width:22%">Option</th>
+    <th>Material</th>
+    <th>Labels</th>
+    <th>LED Windows</th>
+    <th>Est. Cost</th>
+    <th>Lead Time</th>
+  </tr>
+  <tr>
+    <td><strong>A. FR-4 PCB faceplate</strong> <span class="badge badge-rec">RECOMMENDED</span></td>
+    <td>1.0–1.6 mm FR-4</td>
+    <td>White silkscreen (one color)</td>
+    <td>Drilled holes or soldermask-removed windows</td>
+    <td>$5–15 (5 pcs)</td>
+    <td>5–7 days fab + shipping</td>
+  </tr>
+  <tr>
+    <td><strong>B. Front Panel Express</strong> <span class="badge badge-alt">PREMIUM</span></td>
+    <td>2 mm anodized aluminum</td>
+    <td>Engraved (multiple colors)</td>
+    <td>Milled rectangular/round cutouts</td>
+    <td>$80–200</td>
+    <td>7 days + shipping</td>
+  </tr>
+  <tr>
+    <td><strong>C. SendCutSend</strong> <span class="badge badge-alt">ALTERNATIVE</span></td>
+    <td>Aluminum sheet (various gauges)</td>
+    <td>Laser-engraved</td>
+    <td>Laser-cut holes (±0.005″)</td>
+    <td>$40–100</td>
+    <td>2–4 days + shipping</td>
+  </tr>
+  <tr>
+    <td><strong>D. Ponoko</strong> <span class="badge badge-skip">SIMILAR TO C</span></td>
+    <td>Aluminum or acrylic</td>
+    <td>Laser-engraved</td>
+    <td>Laser-cut holes</td>
+    <td>$50–120</td>
+    <td>Same-day to 3 days</td>
+  </tr>
+  <tr>
+    <td><strong>E. PCBWay panel service</strong> <span class="badge badge-skip">UNVERIFIED</span></td>
+    <td>Aluminum / acrylic via CNC</td>
+    <td>CNC engraved or printed</td>
+    <td>CNC milled</td>
+    <td>Unknown (quote needed)</td>
+    <td>Unknown</td>
+  </tr>
+</table>
+
+<h2>3. Detailed Analysis</h2>
+
+<h3>Option A: FR-4 PCB as Faceplate <span class="badge badge-rec">RECOMMENDED</span></h3>
+<p>Design a second PCB in EasyEDA with no electrical function — just the faceplate geometry. Use the board outline for the 305 × 140 mm shape, drilled holes for LEDs/buttons/buzzer, and silkscreen for all text labels.</p>
+<ul>
+  <li><span class="pro">+</span> Cheapest by far: $2–5 per board at JLCPCB (5-piece minimum), same vendor as the main PCB</li>
+  <li><span class="pro">+</span> Precise alignment: designed in the same tool as the main PCB, coordinates match exactly</li>
+  <li><span class="pro">+</span> Multiple solder mask colors available (black, white, blue, green, red) — black with white silkscreen looks professional</li>
+  <li><span class="pro">+</span> You get 5 copies — spares for revisions or mistakes</li>
+  <li><span class="pro">+</span> Can be ordered alongside the main PCB in the same JLCPCB shipment</li>
+  <li><span class="con">−</span> Silkscreen is one color only (white on black, or yellow on other colors)</li>
+  <li><span class="con">−</span> FR-4 is not as rigid or premium-looking as aluminum</li>
+  <li><span class="con">−</span> 1.0 mm can flex slightly; 1.6 mm is stiffer but thicker</li>
+</ul>
+
+<div class="callout">
+  <strong>How to design it:</strong> In EasyEDA, create a new PCB project. Draw the board outline at 305 × 140 mm. Place drill holes at every LED position (use 1.5–2.0 mm diameter for 0805 LEDs). Add silkscreen text for all labels. Add mounting holes at the corners. Export Gerber and order from JLCPCB as a standard PCB (no components, no assembly). Choose <strong>black solder mask + white silkscreen</strong> for best contrast and marine readability.
+</div>
+
+<h3>LED Window Options (FR-4 method)</h3>
+<table>
+  <tr><th>Approach</th><th>Pros</th><th>Cons</th></tr>
+  <tr>
+    <td>Drilled holes (1.5–2.0 mm)</td>
+    <td>Simple; light passes through cleanly</td>
+    <td>Bare hole looks unfinished; dust entry</td>
+  </tr>
+  <tr>
+    <td>Soldermask-removed windows (no copper)</td>
+    <td>Translucent FR-4 diffuses light; flush surface</td>
+    <td>Dim unless LED is bright; yellowish tint through bare FR-4</td>
+  </tr>
+  <tr>
+    <td>Drilled hole + light pipe / diffuser</td>
+    <td>Clean look; even light distribution</td>
+    <td>Extra BOM item; 71 light pipes to install</td>
+  </tr>
+</table>
+<p><strong>Recommendation:</strong> Simple drilled holes. The 0805 LEDs are surface-mount directly under the faceplate. A 1.5 mm drill hole lets light through cleanly. If the bare hole bothers you later, you can add clear epoxy dots or a clear overlay film.</p>
+
+<h3>Option B: Front Panel Express</h3>
+<p>Professional anodized aluminum panels with CNC-milled cutouts and engraved/painted text. Their free <a href="https://www.frontpanelexpress.com">Front Panel Designer</a> software generates an instant quote.</p>
+<ul>
+  <li><span class="pro">+</span> Best appearance — anodized aluminum with multi-color engraving</li>
+  <li><span class="pro">+</span> Tight tolerances, professional finish</li>
+  <li><span class="con">−</span> Most expensive option ($80–200+ for a panel this size with 71+ cutouts and 40+ text labels)</li>
+  <li><span class="con">−</span> Each cutout and text string adds cost individually</li>
+  <li><span class="con">−</span> 7-day fabrication + US shipping</li>
+  <li><span class="con">−</span> Design file is proprietary (.fpd format) — must use their software</li>
+</ul>
+<p><strong>File format:</strong> <code>.fpd</code> (their own tool) — download Front Panel Designer, lay out holes and text, get instant quote.</p>
+
+<h3>Option C: SendCutSend</h3>
+<p>Laser-cut aluminum with optional laser engraving. Upload DXF/SVG, get instant quote.</p>
+<ul>
+  <li><span class="pro">+</span> Fast turnaround (2–4 days)</li>
+  <li><span class="pro">+</span> Good accuracy (±0.005″ / ±0.13 mm)</li>
+  <li><span class="pro">+</span> Accepts SVG/DXF/DWG — easy to produce</li>
+  <li><span class="con">−</span> Engraving is surface-only (no color fill) — less readable than silkscreen or painted engraving</li>
+  <li><span class="con">−</span> Moderate cost for a one-off</li>
+</ul>
+<p><strong>File format:</strong> <code>.svg</code>, <code>.dxf</code>, <code>.dwg</code>, or <code>.ai</code></p>
+
+<h3>Option D: Ponoko</h3>
+<p>Similar to SendCutSend. Laser cutting + engraving on metals and acrylics. Interesting option: <strong>two-color acrylic</strong> (e.g., black over white) — laser engraves the top layer to reveal white text underneath, no paint needed.</p>
+<ul>
+  <li><span class="pro">+</span> Two-color acrylic gives sharp, durable labels with no paint fill</li>
+  <li><span class="con">−</span> Starts at ~$50 minimum for one part</li>
+  <li><span class="con">−</span> Custom material surcharge ($150–500) if your desired finish isn't in their catalog</li>
+</ul>
+
+<h2>4. Recommendation</h2>
+
+<div class="callout">
+  <strong>Go with Option A: FR-4 PCB faceplate from JLCPCB.</strong><br><br>
+  Reasons:
+  <ol style="margin-top: 8px;">
+    <li><strong>Cost:</strong> ~$5–15 for 5 pieces vs. $80–200 for one aluminum panel</li>
+    <li><strong>Alignment:</strong> Designed in the same EasyEDA project — LED hole positions can be copied directly from the main PCB</li>
+    <li><strong>Speed:</strong> Order it alongside the main board, ships together</li>
+    <li><strong>Iteration:</strong> If labels need revision, you have 4 spare boards and a $5 re-order</li>
+    <li><strong>Appearance:</strong> Black FR-4 with white silkscreen is clean and readable — adequate for a panel inside the engine room</li>
+  </ol>
+  <br>
+  If you want a premium finish later (e.g., for the salon or nav station), Option B (Front Panel Express) is the upgrade path.
+</div>
+
+<h2>5. Next Steps (FR-4 Faceplate)</h2>
+<ol>
+  <li>Create a new EasyEDA PCB project for the faceplate (305 × 140 mm board outline)</li>
+  <li>Place drill holes at every LED position — extract X/Y coordinates from the main PCB JSON</li>
+  <li>Add drill holes for MUTE/TEST pushbuttons and buzzer sound holes</li>
+  <li>Add mounting holes at corners (M3 = 3.2 mm drill)</li>
+  <li>Add silkscreen text: 29 channel labels, 4 column headers, title, PWR</li>
+  <li>Choose: <strong>black solder mask, white silkscreen, 1.6 mm thickness, HASL finish</strong></li>
+  <li>Export Gerber, order from JLCPCB (PCB only, no assembly)</li>
+</ol>
+
+<h2>6. Design File Requirements by Vendor</h2>
+<table>
+  <tr><th>Vendor</th><th>File Format</th><th>Quote Tool</th></tr>
+  <tr><td>JLCPCB (FR-4)</td><td>Gerber (from EasyEDA)</td><td>jlcpcb.com order page</td></tr>
+  <tr><td>Front Panel Express</td><td>.fpd (proprietary)</td><td>Front Panel Designer software (free)</td></tr>
+  <tr><td>SendCutSend</td><td>.svg, .dxf, .dwg, .ai</td><td>sendcutsend.com instant quote</td></tr>
+  <tr><td>Ponoko</td><td>.svg, .dxf, .ai</td><td>ponoko.com instant quote</td></tr>
+  <tr><td>PCBWay</td><td>.dxf, .step (CNC)</td><td>pcbway.com quote form</td></tr>
+</table>
+
+<h2>7. Sources</h2>
+<ul>
+  <li><a href="https://forum.pedalpcb.com/threads/back-lit-faceplate-tutorial.27033/post-347736">PedalPCB: Backlit faceplate tutorial</a> — FR-4 PCB as faceplate technique</li>
+  <li><a href="https://loopmumnocomputer.discourse.group/t/diy-front-panels-with-pcb/121">Look Mum No Computer: DIY front panels with PCB</a> — JLCPCB FR-4 panel experiences</li>
+  <li><a href="https://sendcutsend.com/laser-cutting-services">SendCutSend: Laser cutting services</a></li>
+  <li><a href="https://ponoko.com/laser-engraving">Ponoko: Laser engraving service</a></li>
+  <li><a href="https://www.pcbway.com/blog/News/Mounting_And_Protecting_Custom_PCBs_With_Laser_Cut_Faceplates__Panels_And_Enclosures.html">PCBWay / Ponoko: Laser cut faceplates and enclosures</a></li>
+  <li><a href="https://www.frontpanelexpress.com">Front Panel Express</a> — aluminum panel fabrication</li>
+</ul>
+
+</body>
+</html>

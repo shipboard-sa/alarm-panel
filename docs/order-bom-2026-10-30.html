@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alarm Panel V2.2 — Order BOM</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1a1a;color:#e0e0e0;font-family:'Segoe UI',system-ui,sans-serif;padding:24px;max-width:960px;margin:0 auto}
+h1{font-size:18px;color:#c8a24e;margin-bottom:4px}
+h2{font-size:14px;color:#aaa;margin:20px 0 8px;border-bottom:1px solid #333;padding-bottom:4px}
+.sub{font-size:12px;color:#888;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;font-size:12px;margin:8px 0 16px}
+th,td{border:1px solid #333;padding:5px 8px;text-align:left}
+th{background:#252525;color:#aaa;font-weight:600}
+.ordered{color:#60ff60}
+.warn{color:#ff9040}
+.fix{color:#ff6060}
+.note{font-size:11px;color:#888;font-style:italic;margin:4px 0 12px}
+.section{background:#222;border:1px solid #333;border-radius:6px;padding:12px 16px;margin:12px 0}
+a{color:#6090ff}
+.total{font-weight:bold;color:#c8a24e}
+</style>
+</head>
+<body>
+
+<h1>ALARM PANEL V2.2 — ORDER BOM</h1>
+<div class="sub">Order date: 2026-10-30 — all parts needed beyond the two JLCPCB PCB orders (already placed)</div>
+
+<h2>Order 1: LCSC — Through-Hole Components</h2>
+<p class="note">These are hand-soldered to the main PCB after SMT assembly arrives. LCSC can combine with JLCPCB orders for shared shipping.</p>
+<table>
+<tr><th>Qty</th><th>Description</th><th>Mfr Part</th><th>LCSC #</th><th>Est. Price</th><th>Notes</th></tr>
+<tr><td>8</td><td>Screw terminal 8-pin 5.08mm</td><td>KEFA KF142V-5.08-8P</td><td><a href="https://www.lcsc.com/product-detail/C475140.html">C475140</a></td><td>~$0.55 ea</td><td>CN1–CN8. <span class="warn">~82 in stock — verify before ordering</span></td></tr>
+<tr><td>1</td><td>Screw terminal 3-pin 5.08mm</td><td>KEFA KF142V-5.08-3P</td><td><a href="https://www.lcsc.com/product-detail/C475135.html">C475135</a></td><td>~$0.25 ea</td><td>CN9 (mute/buzzer). <span class="fix">BOM corrected from C474887</span></td></tr>
+<tr><td>2</td><td>Pin header 2-pin 2.54mm TH</td><td>XFCN PZ254V-11-02P</td><td><a href="https://www.lcsc.com/product-detail/C492401.html">C492401</a></td><td>~$0.02 ea</td><td>H4 (TEST), H5 (MUTE). Min order 50 — order 50, keep spares</td></tr>
+<tr><td>1</td><td>Piezo buzzer 12mm TH</td><td>HMB1206-05</td><td><a href="https://www.lcsc.com/product-detail/C96095.html">C96095</a></td><td>~$0.28 ea</td><td>Soldered to PCB. Min order 5 — order 5, keep spares</td></tr>
+<tr><td colspan="4" class="total">LCSC Subtotal (est.)</td><td class="total" colspan="2">~$7 + shipping</td></tr>
+</table>
+
+<h2>Order 2: Amazon — Pushbuttons</h2>
+<p class="note">12mm lighted panel-mount momentary pushbuttons. 4- or 5-pin: 2 for switch (wire to H4/H5 headers), 2 for built-in LED (wire to panel +24V/GND). Confirm 24V LED rating.</p>
+<table>
+<tr><th>Qty</th><th>Description</th><th>Product</th><th>Est. Price</th><th>Notes</th></tr>
+<tr>
+<td>1 pack (3)</td>
+<td>MUTE button — RED, 12mm, IP67, 24V LED, momentary</td>
+<td>FILN 12mm Momentary Push Button, zinc-aluminum alloy, 5–24V DC<br><a href="https://www.amazon.com/s?k=FILN+12mm+momentary+push+button+red+24V">Search Amazon: FILN 12mm red 24V</a></td>
+<td>~$10–12</td>
+<td>3-pack gives 2 spares</td>
+</tr>
+<tr>
+<td>1 pack (3)</td>
+<td>TEST button — YELLOW, 12mm, IP67, 24V LED, momentary</td>
+<td>FILN 12mm Momentary Push Button, zinc-aluminum alloy, 5–24V DC<br><a href="https://www.amazon.com/s?k=FILN+12mm+momentary+push+button+yellow+24V">Search Amazon: FILN 12mm yellow 24V</a></td>
+<td>~$10–12</td>
+<td>3-pack gives 2 spares</td>
+</tr>
+<tr><td colspan="3" class="total">Amazon Subtotal (est.)</td><td class="total" colspan="2">~$22</td></tr>
+</table>
+
+<div class="section">
+<strong>Before clicking Buy — verify on the Amazon listing:</strong>
+<ul style="margin:6px 0 0 18px;font-size:12px;line-height:1.6">
+<li>LED voltage = <strong>24V DC</strong> (not 12V — boat is 24V)</li>
+<li>Action = <strong>momentary</strong> (not latching)</li>
+<li>Contact = <strong>normally open (NO)</strong></li>
+<li>Mounting hole = <strong>12mm</strong> (matches faceplate drill)</li>
+<li>Terminal type = solder lug or wire leads (either works)</li>
+</ul>
+</div>
+
+<h2>Order 3: Amazon — Label Film</h2>
+<table>
+<tr><th>Qty</th><th>Description</th><th>Product</th><th>Est. Price</th><th>Notes</th></tr>
+<tr>
+<td>1 pack (10 sheets)</td>
+<td>Translucent backlit film, 8.5×11", laser-printable</td>
+<td>RTL49 Lite Film<br><a href="https://www.amazon.com/s?k=RTL49+Lite+Film">Search Amazon: RTL49 Lite Film</a></td>
+<td>~$10–15</td>
+<td>Print on Patti's laser printer. Black with reversed-out text.</td>
+</tr>
+<tr><td colspan="3" class="total">Film Subtotal (est.)</td><td class="total" colspan="2">~$12</td></tr>
+</table>
+
+<h2>Order 4: Hardware (check spares first)</h2>
+<p class="note">May already have these aboard. Only order if not in spares.</p>
+<table>
+<tr><th>Qty</th><th>Description</th><th>Notes</th></tr>
+<tr><td>6</td><td>M3 standoffs (length TBD — measure after PCB arrives)</td><td>Space faceplate from main PCB, clear TH connectors (~12–15mm)</td></tr>
+<tr><td>12</td><td>M3 × 6mm pan head screws</td><td>6 front + 6 back</td></tr>
+<tr><td>1 ft</td><td>22 AWG stranded wire (4 colors)</td><td>2 wires per button × 2 buttons = 4 short runs (~150mm each)</td></tr>
+</table>
+
+<h2>Wiring Notes for Pushbuttons</h2>
+<div class="section" style="font-size:12px;line-height:1.8">
+<strong>Each button has 4 terminals:</strong>
+<ul style="margin:6px 0 0 18px">
+<li><strong>NO + COM</strong> → wire to H4 or H5 2-pin header on PCB (switch contacts)</li>
+<li><strong>LED+ → panel +24V rail</strong> (tap from any connector's +24V pin)</li>
+<li><strong>LED− → panel GND rail</strong></li>
+</ul>
+<p style="margin-top:8px">MUTE button switch → H5 header. TEST button switch → H4 header.</p>
+</div>
+
+<h2>Total Estimated Cost</h2>
+<table>
+<tr><th>Source</th><th>Items</th><th>Est. Total</th></tr>
+<tr><td>LCSC</td><td>Connectors, headers, buzzer</td><td>~$7 + shipping</td></tr>
+<tr><td>Amazon</td><td>Pushbuttons (2 packs)</td><td>~$22</td></tr>
+<tr><td>Amazon</td><td>RTL49 Lite Film</td><td>~$12</td></tr>
+<tr><td>Hardware</td><td>Standoffs, screws, wire</td><td>~$5 (if not in spares)</td></tr>
+<tr><td colspan="2" class="total">TOTAL (est.)</td><td class="total">~$46</td></tr>
+</table>
+
+</body>
+</html>
